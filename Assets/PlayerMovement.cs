@@ -16,12 +16,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 movementVector = new Vector3(Input.GetAxis("Horizontal") * speedFactor, 0f, 0f);
             rb.velocity = movementVector;
-        }
-        
-
-        
+        }  
     }
-    void SetWidth(float width)
+    void SetPaddleSize(float width)
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.size = new Vector2(spriteRenderer.size.x, width);

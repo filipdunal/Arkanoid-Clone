@@ -26,11 +26,10 @@ public class Ball : MonoBehaviour
         {
             rb.velocity *= 10f;
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
-            Debug.Log(rb.velocity.magnitude);
         }
         else
         {
-            transform.position = paddle.position + new Vector3(-0.26f, 0.4f, 0f);
+            transform.position = paddle.position + new Vector3(0f, 0.4f, 0f);
             if(Input.GetKey(KeyCode.Space))
             {
                 KickBall();

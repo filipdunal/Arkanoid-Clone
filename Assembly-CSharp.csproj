@@ -63,7 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Ball.cs" />
+    <Compile Include="Assets\LevelGenerator.cs" />
+    <Compile Include="Assets\Life.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
+    <Compile Include="Assets\Progress.cs" />
+    <Compile Include="Assets\Tile.cs" />
+    <Compile Include="Assets\UI.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Filip/Documents/GitHub/Arkanoid Clone/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
