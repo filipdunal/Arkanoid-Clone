@@ -1434,6 +1434,10 @@ MonoBehaviour:
   maxX: 3.6
   minY: 0
   maxY: 3.6
+  mirrorX: 1
+  numberOfRectangles: 8
+  rectangleWidth: 1
+  rectangleHeight: 2
 --- !u!1 &1636517583
 GameObject:
   m_ObjectHideFlags: 0

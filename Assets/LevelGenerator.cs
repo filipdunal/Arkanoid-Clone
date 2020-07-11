@@ -7,14 +7,28 @@ public class LevelGenerator : MonoBehaviour
     public List<Transform> tile;
     public SpriteRenderer mapBounds;
 
+    [Header("Map bounds")]
     public float minX=-3.4f;
     public float maxX = 3.6f;
     public float minY=0f;
     public float maxY=3.6f;
+
+    public bool mirrorX;
+
+    float xMargin;
+    float yMargin;
+
+    [Header("Rectangle")]
+    public int numberOfRectangles = 1;
+    public int rectangleWidth = 1;
+    public int rectangleHeight = 1;
+
     private void Start()
     {
-        //GenerateTilesV1();
-        //GenerateTilesV2();
+        maxX = mirrorX ? 0f : maxX;
+
+        xMargin = 0.4f * rectangleWidth;
+        yMargin = 0.2f * rectangleHeight;
         StartCoroutine(TEST());
     }
 
@@ -22,12 +36,13 @@ public class LevelGenerator : MonoBehaviour
     {
         for(int i=0;i<100;i++)
         {
-            GenerateTilesV2();
-            yield return new WaitForSecondsRealtime(4f);
+            GenerateTiles();
+            yield return new WaitForSeconds(3f);
             foreach (Transform child in transform)
             {
                 Destroy(child.gameObject);
             }
+            yield return null;
         }
         
 
@@ -45,35 +60,82 @@ public class LevelGenerator : MonoBehaviour
     }
 
     float floatError = 0.01f;
-    void GenerateTilesV2()
+    
+    Vector2[] GenerateOrigins()
     {
-        for (int i=0;i<4;i++)
+        Vector2[] origins = new Vector2[numberOfRectangles];
+        for(int i=0;i<numberOfRectangles;i++)
+        {
+            bool valid = true;
+            do
+            {
+                valid = true;
+                origins[i] = new Vector2(RoundX(Random.Range(minX + xMargin, maxX - xMargin)), RoundY(Random.Range(minY + yMargin, maxY - yMargin)));
+                if (i != 0)
+                {
+                    for (int j = 0; j < i; j++)
+                    {
+                        if (origins[i] == origins[j])
+                        {
+                            valid = false;
+                            //Debug.Log("Origin overlapping!!!");
+                            break;
+                        }
+                    }
+
+                }
+            }
+            while (!valid);
+        }
+        
+        return origins;
+    }
+
+    void GenerateTiles()
+    {
+        Vector2[] origins = GenerateOrigins();
+        for (int i=0;i<numberOfRectangles;i++)
         {
             int type = Random.Range(0, tile.Count);
-            Vector2 origin = new Vector2(RoundX(Random.Range(minX, maxX)), RoundY(Random.Range(minY, maxY)));
-            //Debug.Log(origin);
+
+            //Vector2 origin = new Vector2(RoundX(Random.Range(minX+xMargin, maxX-xMargin)), RoundY(Random.Range(minY+yMargin, maxY-yMargin)));
+            Vector2 origin = origins[i];
             if(IsPlaceFree(origin))
             {
                 Instantiate(tile[type], origin, Quaternion.identity, transform);
             }
-            float squareWidth = 2f;
-            for(float x=origin.x-0.4f*squareWidth;x<= origin.x + 0.4f * squareWidth+floatError;x+=0.4f)
+            for(float x=origin.x-0.4f*rectangleWidth;x<= origin.x + 0.4f * rectangleWidth+floatError;x+=0.4f)
             {
-                for(float y=origin.y-0.2f*squareWidth;y<=origin.y+0.2f*squareWidth+floatError; y+=0.2f)
+                for(float y=origin.y-0.2f*rectangleHeight;y<=origin.y+0.2f*rectangleHeight+floatError; y+=0.2f)
                 {
                     Vector2 point = new Vector2(x, y);
-                    if(IsPlaceOnMap(point))
+                    if(IsPlaceOnMap(point) && IsPlaceFree(point))
                     {
-                        bool condition = !IsPlaceFree(point);
-                        Transform a= Instantiate(tile[type], point, Quaternion.identity, transform);
-                        if (condition)
-                        {
-                            Destroy(a.gameObject);
-                        }
+                        Instantiate(tile[type], point, Quaternion.identity, transform);
                         
                     }
                 }
             }
+        }
+        if(mirrorX)
+        {
+            MirrorTiles();
+        }
+    }
+
+    void MirrorTiles()
+    {
+        List<GameObject> tiles=new List<GameObject>();
+        foreach(Transform children in transform)
+        {
+            tiles.Add(children.gameObject);
+        }
+
+        Vector3 flipX = new Vector3(-1f, 1f, 1f);
+        foreach(GameObject tile in tiles)
+        {
+            Transform copiedTile = Instantiate(tile,tile.transform.position,Quaternion.identity,transform).transform;
+            copiedTile.position = Vector3.Scale(copiedTile.position, flipX);
         }
     }
     float RoundX(float value)
@@ -93,7 +155,6 @@ public class LevelGenerator : MonoBehaviour
 
     bool IsPlaceOnMap(Vector2 place)
     {
-        //return true;
         return (place.x >= minX && place.x <= maxX) && (place.y >= minY && place.y <= maxY);
     }
 }
