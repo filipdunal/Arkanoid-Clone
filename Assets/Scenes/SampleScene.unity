@@ -131,7 +131,8 @@ GameObject:
   m_Component:
   - component: {fileID: 26469471}
   - component: {fileID: 26469472}
-  m_Layer: 0
+  - component: {fileID: 26469473}
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,6 +184,18 @@ PolygonCollider2D:
       - {x: 0.40896916, y: -0.09741069}
       - {x: 0.44927785, y: 0.0076374914}
       - {x: 0.11595546, y: 0.12270426}
+--- !u!114 &26469473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26469470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7186f2276debf4c418007f87cd7bc02f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &194846959
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +942,7 @@ GameObject:
   - component: {fileID: 1189907889}
   - component: {fileID: 1189907888}
   - component: {fileID: 1189907887}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameOverArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,7 +1016,7 @@ GameObject:
   - component: {fileID: 1230185184}
   - component: {fileID: 1230185187}
   - component: {fileID: 1230185188}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Paddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1429,12 +1442,16 @@ MonoBehaviour:
   - {fileID: 6376570101378578234, guid: 9b40ca847dad54d4b8eda857b870581b, type: 3}
   - {fileID: 1681773142371788428, guid: 3c826f56b4a230c49b178b1afb5475fe, type: 3}
   - {fileID: 5151226651666018642, guid: 709c26668e31f99498eacc11f4f9cf75, type: 3}
+  powerUps:
+  - {fileID: 7041798608810271060, guid: c3375f3174e9cf842931e2e9f09217c3, type: 3}
+  - {fileID: 7041798608810271060, guid: c3375f3174e9cf842931e2e9f09217c3, type: 3}
   mapBounds: {fileID: 0}
   minX: -3.4
   maxX: 3.6
   minY: 0
   maxY: 3.6
   mirrorX: 1
+  amounOfPowerUpBlocks: 20
   numberOfRectangles: 8
   rectangleWidth: 1
   rectangleHeight: 2

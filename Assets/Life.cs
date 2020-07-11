@@ -62,6 +62,7 @@ public class Life : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision.collider.gameObject.layer);
         if(collision.collider.tag=="Ball")
         {
             BallLoss();

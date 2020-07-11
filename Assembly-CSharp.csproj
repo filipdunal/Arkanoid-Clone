@@ -63,10 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Ball.cs" />
+    <Compile Include="Assets\CatchPowerUps.cs" />
     <Compile Include="Assets\FitInScreen.cs" />
     <Compile Include="Assets\LevelGenerator.cs" />
     <Compile Include="Assets\Life.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
+    <Compile Include="Assets\PowerUp.cs" />
+    <Compile Include="Assets\PowerUpBall.cs" />
     <Compile Include="Assets\Progress.cs" />
     <Compile Include="Assets\Tile.cs" />
     <Compile Include="Assets\UI.cs" />

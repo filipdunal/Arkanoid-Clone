@@ -5,7 +5,9 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour
 {
     public List<Transform> tile;
+    public List<Transform> powerUps;
     public SpriteRenderer mapBounds;
+
 
     [Header("Map bounds")]
     public float minX=-3.4f;
@@ -14,6 +16,7 @@ public class LevelGenerator : MonoBehaviour
     public float maxY=3.6f;
 
     public bool mirrorX;
+    public int amounOfPowerUpBlocks;
 
     float xMargin;
     float yMargin;
@@ -29,7 +32,9 @@ public class LevelGenerator : MonoBehaviour
 
         xMargin = 0.4f * rectangleWidth;
         yMargin = 0.2f * rectangleHeight;
-        StartCoroutine(TEST());
+
+        //StartCoroutine(TEST());
+        GenerateTiles();
     }
 
     IEnumerator TEST()
@@ -87,7 +92,6 @@ public class LevelGenerator : MonoBehaviour
             }
             while (!valid);
         }
-        
         return origins;
     }
 
@@ -97,8 +101,6 @@ public class LevelGenerator : MonoBehaviour
         for (int i=0;i<numberOfRectangles;i++)
         {
             int type = Random.Range(0, tile.Count);
-
-            //Vector2 origin = new Vector2(RoundX(Random.Range(minX+xMargin, maxX-xMargin)), RoundY(Random.Range(minY+yMargin, maxY-yMargin)));
             Vector2 origin = origins[i];
             if(IsPlaceFree(origin))
             {
@@ -121,6 +123,7 @@ public class LevelGenerator : MonoBehaviour
         {
             MirrorTiles();
         }
+        GeneratePowerUps(amounOfPowerUpBlocks);
     }
 
     void MirrorTiles()
@@ -136,6 +139,30 @@ public class LevelGenerator : MonoBehaviour
         {
             Transform copiedTile = Instantiate(tile,tile.transform.position,Quaternion.identity,transform).transform;
             copiedTile.position = Vector3.Scale(copiedTile.position, flipX);
+        }
+    }
+
+    void GeneratePowerUps(int amount)
+    {
+        int powerUpTypes = System.Enum.GetValues(typeof(PowerUp)).Length;
+        for (int i=0;i<amount;i++)
+        {
+            int tileNumber = Random.Range(1, transform.childCount);
+            PowerUp randomPowerUp = (PowerUp)Random.Range(0, powerUpTypes);
+
+            if(transform.GetChild(tileNumber).GetComponent<Tile>().powerUp==PowerUp.None)
+            {
+                transform.GetChild(tileNumber).GetComponent<Tile>().powerUp = randomPowerUp;
+            }
+            else
+            {
+                i--;
+            }
+        }
+
+        foreach(Transform children in transform)
+        {
+            children.GetComponent<Tile>().powerUp = PowerUp.BigPaddle;
         }
     }
     float RoundX(float value)
