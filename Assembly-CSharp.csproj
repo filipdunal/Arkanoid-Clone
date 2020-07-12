@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Ball.cs" />
     <Compile Include="Assets\CatchPowerUps.cs" />
+    <Compile Include="Assets\DestroyPowerUp.cs" />
     <Compile Include="Assets\FitInScreen.cs" />
     <Compile Include="Assets\LevelGenerator.cs" />
     <Compile Include="Assets\Life.cs" />

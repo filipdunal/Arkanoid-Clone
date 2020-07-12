@@ -3,4 +3,7 @@
     None,
     BigPaddle,
     SmallPaddle,
+    OneMoreBall,
+    StickyPaddle,
+    AddLife
 }

@@ -29,7 +29,7 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            transform.position = paddle.position + new Vector3(0f, 0.4f, 0f);
+            MoveToPaddle();
             if(Input.GetKey(KeyCode.Space))
             {
                 KickBall();
@@ -41,6 +41,11 @@ public class Ball : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x,minimumYSpeed*Mathf.Sign(rb.velocity.y));
         }
         
+    }
+
+    public void MoveToPaddle()
+    {
+        transform.position = paddle.position + new Vector3(0f, 0.4f, 0f);
     }
     void KickBall()
     {

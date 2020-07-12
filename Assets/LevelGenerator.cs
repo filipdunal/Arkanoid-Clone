@@ -16,7 +16,7 @@ public class LevelGenerator : MonoBehaviour
     public float maxY=3.6f;
 
     public bool mirrorX;
-    public int amounOfPowerUpBlocks;
+    public int amountOfPowerUpBlocks;
 
     float xMargin;
     float yMargin;
@@ -28,11 +28,6 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        maxX = mirrorX ? 0f : maxX;
-
-        xMargin = 0.4f * rectangleWidth;
-        yMargin = 0.2f * rectangleHeight;
-
         //StartCoroutine(TEST());
         GenerateTiles();
     }
@@ -42,7 +37,7 @@ public class LevelGenerator : MonoBehaviour
         for(int i=0;i<100;i++)
         {
             GenerateTiles();
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
             foreach (Transform child in transform)
             {
                 Destroy(child.gameObject);
@@ -97,6 +92,10 @@ public class LevelGenerator : MonoBehaviour
 
     void GenerateTiles()
     {
+        maxX = mirrorX ? 0f : maxX;
+        xMargin = 0.4f * rectangleWidth;
+        yMargin = 0.2f * rectangleHeight;
+
         Vector2[] origins = GenerateOrigins();
         for (int i=0;i<numberOfRectangles;i++)
         {
@@ -123,7 +122,7 @@ public class LevelGenerator : MonoBehaviour
         {
             MirrorTiles();
         }
-        GeneratePowerUps(amounOfPowerUpBlocks);
+        GeneratePowerUps(amountOfPowerUpBlocks);
     }
 
     void MirrorTiles()
@@ -159,11 +158,14 @@ public class LevelGenerator : MonoBehaviour
                 i--;
             }
         }
-
+        
+        /*
         foreach(Transform children in transform)
         {
-            children.GetComponent<Tile>().powerUp = PowerUp.BigPaddle;
+            children.GetComponent<Tile>().powerUp = PowerUp.StickyPaddle;
         }
+        */
+        
     }
     float RoundX(float value)
     {

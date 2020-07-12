@@ -8,14 +8,18 @@ public class Life : MonoBehaviour
     public Rigidbody2D ballRigidbody;
     public SpriteRenderer lifeIndicator;
 
+
     public static int points;
 
-    int ballsAmount = 1;
+    public int ballsAmount = 1;
+
+    Vector2 lifeIndicatorOriginalSize;
     private void Start()
     {
+        lifeIndicatorOriginalSize = lifeIndicator.size;
         LifeIndicatorUpdate();
     }
-    public void BallLoss()
+    public void BallLoss(GameObject ball)
     {
         ballsAmount--;
         if(ballsAmount<1)
@@ -27,11 +31,15 @@ public class Life : MonoBehaviour
             }
             else
             {
-                ballRigidbody.simulated = false;
+                FindObjectOfType<Ball>().GetComponent<Rigidbody2D>().simulated = false;
+                ballsAmount++;
             }
+            LifeIndicatorUpdate(true);
         }
-        LifeIndicatorUpdate(true);
-        
+        else
+        {
+            Destroy(ball);
+        }
     }
 
     void GameOver()
@@ -40,32 +48,32 @@ public class Life : MonoBehaviour
     }
 
     float oneLifeTileWidth = 0.53f;
-    void LifeIndicatorUpdate(bool blink=false)
+    public void LifeIndicatorUpdate(bool blink=false)
     {
-        lifeIndicator.size = new Vector2(oneLifeTileWidth * life, lifeIndicator.size.y);
+        lifeIndicatorFixedSize = new Vector2(oneLifeTileWidth * life, lifeIndicatorOriginalSize.y);
+        lifeIndicator.size = lifeIndicatorFixedSize;
         if (blink)
         {
-            StartCoroutine(LifeIndicatorBlink(lifeIndicator.size));
+            StartCoroutine(LifeIndicatorBlink(lifeIndicatorFixedSize));
         }
-        
     }
 
+    Vector2 lifeIndicatorFixedSize;
     IEnumerator LifeIndicatorBlink(Vector2 originalSize)
     {
         for(int i=0;i<3;i++)
         {
             lifeIndicator.size = Vector2.zero;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.15f);
             lifeIndicator.size = originalSize;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.15f);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.collider.gameObject.layer);
         if(collision.collider.tag=="Ball")
         {
-            BallLoss();
+            BallLoss(collision.collider.gameObject);
         }
     }
 }
