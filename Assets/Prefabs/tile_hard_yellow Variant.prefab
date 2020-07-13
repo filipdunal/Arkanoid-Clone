@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: tileLife
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1889461600949777881, guid: 709c26668e31f99498eacc11f4f9cf75,
+        type: 3}
+      propertyPath: type
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5151226651666018642, guid: 709c26668e31f99498eacc11f4f9cf75,
         type: 3}
       propertyPath: m_LocalPosition.x

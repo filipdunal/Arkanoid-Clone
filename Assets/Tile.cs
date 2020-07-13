@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    public int type;
     public int tileLife = 1;
     public int points;
     public PowerUp powerUp=PowerUp.None;

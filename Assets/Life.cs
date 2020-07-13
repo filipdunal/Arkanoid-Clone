@@ -7,7 +7,8 @@ public class Life : MonoBehaviour
     public int life = 3;
     public Rigidbody2D ballRigidbody;
     public SpriteRenderer lifeIndicator;
-
+    public Animator gameOverAnimator;
+    public Animator levelCompletedAnimator;
 
     public static int points;
 
@@ -45,6 +46,11 @@ public class Life : MonoBehaviour
     void GameOver()
     {
         Time.timeScale = 0f;
+
+        Progress progress = FindObjectOfType<Progress>();
+        progress.SaveData(true);
+        progress.gameover = true;
+        gameOverAnimator.Play("GameOver",-1,0f);
     }
 
     float oneLifeTileWidth = 0.53f;

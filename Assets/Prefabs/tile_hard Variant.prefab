@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4066980046170418425, guid: 1009c27b45a1ef543b5fb33962a52094,
+        type: 3}
+      propertyPath: tileLife
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4066980046170418425, guid: 1009c27b45a1ef543b5fb33962a52094,
+        type: 3}
+      propertyPath: type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1930721777837725580, guid: 1009c27b45a1ef543b5fb33962a52094,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -71,7 +81,7 @@ PrefabInstance:
     - target: {fileID: 5834007087381220515, guid: 1009c27b45a1ef543b5fb33962a52094,
         type: 3}
       propertyPath: m_Name
-      value: tile_hard
+      value: tile_hard Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1009c27b45a1ef543b5fb33962a52094, type: 3}

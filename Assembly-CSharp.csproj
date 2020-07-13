@@ -62,16 +62,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Background.cs" />
     <Compile Include="Assets\Ball.cs" />
+    <Compile Include="Assets\CanvasColoring.cs" />
     <Compile Include="Assets\CatchPowerUps.cs" />
     <Compile Include="Assets\DestroyPowerUp.cs" />
     <Compile Include="Assets\FitInScreen.cs" />
     <Compile Include="Assets\LevelGenerator.cs" />
     <Compile Include="Assets\Life.cs" />
+    <Compile Include="Assets\MainMenu.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\PowerUp.cs" />
     <Compile Include="Assets\PowerUpBall.cs" />
     <Compile Include="Assets\Progress.cs" />
+    <Compile Include="Assets\ProgressData.cs" />
+    <Compile Include="Assets\SaveSystem.cs" />
+    <Compile Include="Assets\SerializableTile.cs" />
+    <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\Tile.cs" />
     <Compile Include="Assets\UI.cs" />
     <Reference Include="Unity.Timeline.Editor">

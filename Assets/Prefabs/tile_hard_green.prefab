@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: tileLife
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 376686848380122033, guid: 9b40ca847dad54d4b8eda857b870581b,
+        type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1316145150330874901, guid: 9b40ca847dad54d4b8eda857b870581b,
         type: 3}
       propertyPath: m_Name

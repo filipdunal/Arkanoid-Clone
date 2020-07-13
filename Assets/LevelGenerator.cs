@@ -29,7 +29,7 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         //StartCoroutine(TEST());
-        GenerateTiles();
+        //GenerateTiles();
     }
 
     IEnumerator TEST()
@@ -90,7 +90,7 @@ public class LevelGenerator : MonoBehaviour
         return origins;
     }
 
-    void GenerateTiles()
+    public void GenerateTiles()
     {
         maxX = mirrorX ? 0f : maxX;
         xMargin = 0.4f * rectangleWidth;
@@ -141,6 +141,37 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    public void ClearMap()
+    {
+        foreach(Transform children in transform)
+        {
+            Destroy(children.gameObject);
+        }
+    }
+
+    public IEnumerator RegenerateMap()
+    {
+        ClearMap();
+        yield return null;
+        GenerateTiles();
+    }
+    public void LoadTile(SerializableTile serializableTile)
+    {
+        Transform tileToLoad;
+        foreach(Transform t in tile)
+        {
+            if(t.GetComponent<Tile>().type==serializableTile.type)
+            {
+                tileToLoad = t;
+                Vector3 position=new Vector3(serializableTile.position[0],serializableTile.position[1],serializableTile.position[2]);
+
+                Tile loadedTile = Instantiate(tileToLoad, position, Quaternion.identity, transform).GetComponent<Tile>();
+                loadedTile.tileLife = serializableTile.life;
+                loadedTile.powerUp = serializableTile.powerUp;
+            }
+        }
+
+    }
     void GeneratePowerUps(int amount)
     {
         int powerUpTypes = System.Enum.GetValues(typeof(PowerUp)).Length;

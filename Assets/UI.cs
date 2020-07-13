@@ -15,7 +15,6 @@ public class UI : MonoBehaviour
     private void OnGUI()
     {
         score.text = Progress.points.ToString();
+        highscore.text = Progress.highscore.ToString();
     }
-    
-
 }

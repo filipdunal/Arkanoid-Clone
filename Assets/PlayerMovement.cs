@@ -5,18 +5,20 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speedFactor = 1f;
+    public float speedOfPaddleTransition = 1f;
     public UI ui;
     //public float smallPaddleWidthMultipler = 0.5f;
     //public float bigPaddleWidthMultipler = 2f;
     float normalPadleWidth;
 
     Rigidbody2D rb;
-
+    SpriteRenderer spriteRenderer;
+    Transform collide;
     private void Start()
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         normalPadleWidth = spriteRenderer.size.x;
-
+        collide = transform.GetChild(0);
         rb = GetComponent<Rigidbody2D>();
     }
     public void Update()
@@ -28,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         }  
     }
 
-    float timeOfPaddleSizeChange=5f;
+    public float timeOfPaddleSizeChange=10f;
     IEnumerator TimedPowerUp()
     {
         yield return new WaitForSecondsRealtime(timeOfPaddleSizeChange);
@@ -37,19 +39,17 @@ public class PlayerMovement : MonoBehaviour
     
     public void SetPaddleSize(float width)
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        //spriteRenderer.size = new Vector2(normalPadleWidth*width, spriteRenderer.size.y);
+        //collide.localScale = new Vector3(normalPadleWidth*width,1f,1f);
 
-        spriteRenderer.size = new Vector2(normalPadleWidth*width, spriteRenderer.size.y);
-
-        //CapsuleCollider2D collider = GetComponent<CapsuleCollider2D>();
-        //collider.size = new Vector2(collider.size.x+0.45f, collider.size.y);
-
-        Transform collider = transform.GetChild(0);
-        collider.localScale = new Vector3(normalPadleWidth*width,1f,1f);
+        Vector2 desireSpriteSize = new Vector2(normalPadleWidth * width, spriteRenderer.size.y);
+        Vector3 desireColliderSize= new Vector3(normalPadleWidth * width, 1f, 1f);
 
         StopAllCoroutines();
+        StartCoroutine(TimedPowerUp());
+        StartCoroutine(AnimatePaddle(desireSpriteSize, desireColliderSize));
 
-        if(width==1f)
+        if (width==1f)
         {
             ui.bigPaddleIndicator.gameObject.SetActive(false);
             ui.smallPaddleIndicator.gameObject.SetActive(false);
@@ -64,8 +64,16 @@ public class PlayerMovement : MonoBehaviour
             ui.bigPaddleIndicator.gameObject.SetActive(false);
             ui.smallPaddleIndicator.gameObject.SetActive(true);
         }
-        StartCoroutine(TimedPowerUp());
+        
     }
 
-    
+    IEnumerator AnimatePaddle(Vector2 spriteSize, Vector3 colliderSize)
+    {
+        while((spriteRenderer.size-spriteSize).magnitude>0.01f)
+        {
+            spriteRenderer.size = Vector2.Lerp(spriteRenderer.size, spriteSize, Time.deltaTime * speedOfPaddleTransition);
+            collide.localScale = Vector3.Lerp(collide.localScale, colliderSize, Time.deltaTime * speedOfPaddleTransition);
+            yield return null;
+        }
+    }
 }
