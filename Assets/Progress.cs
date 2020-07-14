@@ -6,6 +6,7 @@ public class Progress : MonoBehaviour
 {
     static int _points;
     public bool gameover;
+    public static int level=1;
  
     public Transform tilesFolder;
     public LevelGenerator levelGenerator;
@@ -75,10 +76,11 @@ public class Progress : MonoBehaviour
     public void SaveData(bool _gameover)
     {
         gameover = _gameover;
+
         List<Tile> tiles = new List<Tile>();
         if (_gameover)
         {
-            SaveSystem.SaveMap(tiles, 0, 0, highscore, _gameover);
+            SaveSystem.SaveMap(tiles, 0, 0, highscore, _gameover, 1);
         }
         else
         {
@@ -90,7 +92,7 @@ public class Progress : MonoBehaviour
                     tiles.Add(tile);
                 }
             }
-            SaveSystem.SaveMap(tiles, life.life, points, highscore, _gameover);
+            SaveSystem.SaveMap(tiles, life.life, points, highscore, _gameover, level);
         } 
     }
 
@@ -110,6 +112,7 @@ public class Progress : MonoBehaviour
             {
                 points = progressData.points;
                 life.life = progressData.health;
+                level = progressData.level;
 
                 levelGenerator.ClearMap();
                 foreach (SerializableTile serializableTile in progressData.serializableTiles)
@@ -133,7 +136,15 @@ public class Progress : MonoBehaviour
         //levelGenerator.ClearMap();
         //levelGenerator.GenerateTiles();
 
-        StartCoroutine(levelGenerator.RegenerateMap());
+        if (reset)
+        {
+            points = 0;
+        }
+        else
+        {
+            level++;
+        }
+        StartCoroutine(levelGenerator.RegenerateMap(level));
 
         life.life = 3;
         life.LifeIndicatorUpdate();
@@ -147,10 +158,7 @@ public class Progress : MonoBehaviour
         balls[0].GetComponent<Rigidbody2D>().simulated = false;
         //life.gameOverAnimator.Play("GameOver");
 
-        if(reset)
-        {
-            points = 0;
-        }
+        
         background.ChangeColor();
     }
 }

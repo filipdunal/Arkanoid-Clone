@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SaveMap(List<Tile> tiles, int health, int points, int highscore, bool gameover)
+    public static void SaveMap(List<Tile> tiles, int health, int points, int highscore, bool gameover, int level)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/savedata.arkanoid";
@@ -17,7 +17,7 @@ public static class SaveSystem
         {
             serializableTiles.Add(new SerializableTile(tile));
         }
-        ProgressData data = new ProgressData(serializableTiles,health,points,highscore,gameover);
+        ProgressData data = new ProgressData(serializableTiles,health,points,highscore,gameover,level);
 
         formatter.Serialize(stream, data);
         stream.Close();

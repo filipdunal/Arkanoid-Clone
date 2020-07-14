@@ -4,7 +4,21 @@ using UnityEngine;
 
 public class Life : MonoBehaviour
 {
-    public int life = 3;
+    int _life=3;
+    public int maxLife = 5;
+    public int life
+    {
+        get { return _life; }
+        set
+        {
+            _life = value;
+            if(_life>maxLife)
+            {
+                _life = maxLife;
+            }
+        }
+    }
+
     public Rigidbody2D ballRigidbody;
     public SpriteRenderer lifeIndicator;
     public Animator gameOverAnimator;

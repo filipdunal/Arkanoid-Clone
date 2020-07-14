@@ -7,6 +7,7 @@ public class UI : MonoBehaviour
 {
     public Text score;
     public Text highscore;
+    public Text level;
 
     public Transform bigPaddleIndicator;
     public Transform smallPaddleIndicator;
@@ -14,6 +15,7 @@ public class UI : MonoBehaviour
 
     private void OnGUI()
     {
+        level.text = Progress.level.ToString();
         score.text = Progress.points.ToString();
         highscore.text = Progress.highscore.ToString();
     }

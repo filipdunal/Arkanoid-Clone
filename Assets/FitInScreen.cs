@@ -6,6 +6,7 @@ public class FitInScreen : MonoBehaviour
 {
     float defaultCameraSize;
     public float width;
+    public float defaultAspect = 1f;
     private void Start()
     {
         defaultCameraSize = Camera.main.orthographicSize;
@@ -13,7 +14,7 @@ public class FitInScreen : MonoBehaviour
     private void Update()
     {
         Camera.main.ResetAspect();
-        if (Camera.main.aspect < 1f)
+        if (Camera.main.aspect < defaultAspect)
         {
             Camera.main.orthographicSize = width * (float)Screen.height / (float)Screen.width * 0.5f;
         }

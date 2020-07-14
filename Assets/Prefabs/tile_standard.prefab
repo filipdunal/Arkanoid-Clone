@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1cbaea4b4efbf4c8df2246b80619b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 5
+  type: 1
   tileLife: 1
   points: 100
   powerUp: 0

@@ -16,13 +16,14 @@ public class LevelGenerator : MonoBehaviour
     public float maxY=3.6f;
 
     public bool mirrorX;
-    public int amountOfPowerUpBlocks;
+    public float chanceToSpawnPowerUp;
 
     float xMargin;
     float yMargin;
 
     [Header("Rectangle")]
-    public int numberOfRectangles = 1;
+    int numberOfRectangles = 1;
+    public int maxNumberOfRectangles = 8;
     public int rectangleWidth = 1;
     public int rectangleHeight = 1;
 
@@ -36,7 +37,7 @@ public class LevelGenerator : MonoBehaviour
     {
         for(int i=0;i<100;i++)
         {
-            GenerateTiles();
+            //GenerateTiles();
             yield return new WaitForSeconds(1f);
             foreach (Transform child in transform)
             {
@@ -90,8 +91,14 @@ public class LevelGenerator : MonoBehaviour
         return origins;
     }
 
-    public void GenerateTiles()
+    public void GenerateTiles(int level)
     {
+        numberOfRectangles = level+1;
+        if(numberOfRectangles>maxNumberOfRectangles)
+        {
+            numberOfRectangles = maxNumberOfRectangles;
+        }
+
         maxX = mirrorX ? 0f : maxX;
         xMargin = 0.4f * rectangleWidth;
         yMargin = 0.2f * rectangleHeight;
@@ -122,7 +129,10 @@ public class LevelGenerator : MonoBehaviour
         {
             MirrorTiles();
         }
-        GeneratePowerUps(amountOfPowerUpBlocks);
+
+        int powerupsAmount = (int)(chanceToSpawnPowerUp * transform.childCount);
+        Debug.Log(powerupsAmount);
+        GeneratePowerUps(powerupsAmount);
     }
 
     void MirrorTiles()
@@ -149,11 +159,11 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public IEnumerator RegenerateMap()
+    public IEnumerator RegenerateMap(int level)
     {
         ClearMap();
         yield return null;
-        GenerateTiles();
+        GenerateTiles(level);
     }
     public void LoadTile(SerializableTile serializableTile)
     {
